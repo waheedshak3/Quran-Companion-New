@@ -1,1 +1,71 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#123d35"><meta name="description" content="Accessible Qur'an reader with verse-by-verse recitation and QR links"><title>Qur'an Companion · Read • Listen • Learn</title><link rel="stylesheet" href="styles.css" defer></head><body><header class="site-header"><a class="brand" href="./" aria-label="Qur'an Companion home"><span class="brand-icon">۞</span><span>Qur'an <b>Companion</b><small>READ · LISTEN · LEARN</small></span></a><button id="settingsToggle" class="outline mini" type="button" aria-expanded="false">Aa Settings</button></header><main class="layout"><section class="intro"><p class="eyebrow">YOUR PERSONAL QUR'AN COMPANION</p><h1>A little support.<br><em>A deeper connection.</em></h1><p>Read at your own pace. Tap any verse to hear it, and repeat it as often as you need.</p></section><div id="settings" class="settings hidden"><h2>Reading settings</h2><label for="arabicSize">Arabic text size <output id="sizeValue">36 px</output></label><input id="arabicSize" type="range" min="26" max="56" value="36"><label class="check"><input id="showTranslation" type="checkbox" checked> Show English translation</label><label class="check"><input id="highContrast" type="checkbox"> High contrast</label></div><section class="reader" aria-label="Qur'an reader"><div class="reader-top"><div><p class="eyebrow">CHOOSE YOUR READING</p><h2>Continue your journey</h2></div><div class="controls"><label for="surahSelect" class="sr-only">Choose surah</label><select id="surahSelect" aria-label="Choose surah"><option>Loading surahs…</option></select></div></div><div class="chapter-head"><div><span class="chapter-number" id="chapterNumber">SURAH 01</span><h2 id="chapterName">Surah Al-Fatihah</h2><p id="chapterMeta">The Opening</p></div><button id="copyLink" class="outline mini" type="button" title="Copy a QR-ready link to this surah">Copy link</button></div><div class="bismillah" id="bismillah" lang="ar" dir="rtl" hidden></div><div id="status" role="status" class="status">Loading verses…</div><div id="verses" class="verses" aria-label="Verses"></div></section><section class="audio-panel"><div class="audio-title"><span class="music">♫</span><div><p class="eyebrow">AUDIO COMPANION</p><h2>Listen & follow</h2><p id="nowPlaying">Tap a verse to play its recording.</p></div></div><audio id="audio" preload="none"></audio><div class="progress"><span id="elapsed">0:00</span><input id="seek" type="range" min="0" max="100" value="0" aria-label="Audio position"><span id="duration">0:00</span></div><div class="transport"><button id="previous" class="circle" type="button" aria-label="Previous verse">⏮</button><button id="play" class="circle primary" type="button" aria-label="Play or pause">▶</button><button id="next" class="circle" type="button" aria-label="Next verse">⏭</button></div><div class="settings-grid"><label>Playback speed<select id="speed"><option value="0.5">0.5×</option><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option></select></label><label>Repeat verse<select id="repeat"><option value="1">Once</option><option value="3">3 times</option><option value="5">5 times</option><option value="0">Continuously</option></select></label></div><p class="footnote" id="audioNote">Recordings are optional. See AUDIO_SETUP.md to connect authorised Al Islam audio files or links.</p></section><footer>Made for readers of all ages and abilities. Verify Qur'anic text, translation and audio against an approved edition before publication.<p id="attribution"></p></footer></main><script src="config.js"></script><script src="app.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#123d32" />
+  <meta name="description" content="Read the Holy Quran while listening to Maulana Feroz Alam. Built around Ahmadiyya Quran numbering and scan-to-continue QR links." />
+  <title>Quran Companion — Read · Listen · Continue</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="data/surahs.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#verses">Skip to Quran verses</a>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./" aria-label="Quran Companion home"><span class="brand-mark" aria-hidden="true">۞</span><span class="brand-stack"><strong>Quran Companion</strong><small>READ · LISTEN · CONTINUE</small></span></a>
+        <div class="top-actions">
+          <a class="source-link" href="https://www.alislam.org/quran/app/" target="_blank" rel="noopener noreferrer">Alislam <span aria-hidden="true">↗</span></a>
+          <button id="openQr" class="header-button" type="button"><span class="qr-mini" aria-hidden="true">▦</span><span>QR codes</span></button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-layout">
+      <aside class="sidebar" id="sidebar" aria-label="Quran chapters">
+        <div class="sidebar-top"><span class="overline">THE HOLY QURAN</span><h2>Chapters <span class="subtle">/ سورہ</span></h2></div>
+        <label for="surahSearch" class="sr-only">Search chapters</label>
+        <div class="search-wrap"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="surahSearch" type="search" placeholder="Find a Surah..." autocomplete="off" /></div>
+        <nav id="chapterList" class="chapter-list" aria-label="Choose a Surah"></nav>
+        <div class="sidebar-bottom"><span class="status-dot"></span> Based on Alislam numbering <a href="https://www.alislam.org/quran/app/" target="_blank" rel="noreferrer">↗</a></div>
+      </aside>
+
+      <section class="reader" id="reader" aria-label="Quran reader">
+        <div class="reader-head">
+          <div class="reader-kicker"><span class="tiny-flower">✺</span> A MOMENT WITH THE QURAN <span class="line"></span></div>
+          <div class="reader-title-row"><div><h1 id="surahTitle">Al-Fatihah</h1><p class="surah-sub" id="surahDetails">The Opening · Chapter 1</p></div><div class="arabic-title" id="arabicTitle" lang="ar" dir="rtl">الفاتحة</div></div>
+          <div class="reader-tools">
+            <div class="field"><label for="surahSelect">Surah</label><select id="surahSelect" aria-label="Choose Surah"></select></div>
+            <div class="field verse-field"><label for="verseSelect">Start from Ayah</label><select id="verseSelect" aria-label="Choose starting verse"></select></div>
+            <button class="jump-button" id="jumpButton" type="button">Go to verse <span aria-hidden="true">→</span></button>
+            <button class="icon-button save-button" id="bookmarkButton" type="button" aria-label="Save current verse" title="Save reading position"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h12v18l-6-4-6 4z"/></svg></button>
+          </div>
+          <div class="source-strip"><span class="green-dot"></span><span>Recitation by <strong>Maulana Feroz Alam Sahib</strong></span><span class="separator"></span><span>Arabic • Alislam verse numbering</span></div>
+        </div>
+
+        <div class="reader-content">
+          <div class="reading-toolbar"><div class="reading-label"><span class="tiny-flower">✺</span> <span id="readingLabel">SURAH AL-FATIHAH</span></div><div class="text-tools"><button class="text-tool" id="toggleTranslation" aria-pressed="true" type="button">Translation <span id="translationTick">✓</span></button><button class="text-tool size-button" id="smallerText" aria-label="Reduce Arabic text size" type="button">A−</button><button class="text-tool size-button" id="largerText" aria-label="Increase Arabic text size" type="button">A+</button></div></div>
+          <div id="loadMessage" role="status" class="load-message" hidden></div>
+          <div id="verses" class="verses" aria-live="polite"></div>
+          <div class="reader-end"><span aria-hidden="true">✦</span><p>May Allah increase us in knowledge and understanding.</p><span aria-hidden="true">✦</span></div>
+          <div class="source-note">Quranic references use the Ahmadiyya convention. Verify text against <a href="https://www.alislam.org/quran/app/" target="_blank" rel="noreferrer">Alislam's official Quran app</a>. Details on text sources are in the <a href="README.md" target="_blank">project README</a>.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="player" id="player" aria-label="Audio player">
+    <div class="player-inner"><div class="track-icon" aria-hidden="true">♫</div><div class="track-info"><span class="now-playing">NOW PLAYING <span class="player-led"></span></span><strong id="trackTitle">Al-Fatihah · Ayah 1</strong><span class="track-by">Maulana Feroz Alam</span></div><div class="player-controls"><button id="prevBtn" class="transport small-transport" title="Previous verse" aria-label="Previous verse" type="button"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M6 5h2v14H6zm3 7 10-7v14z"/></svg></button><button id="playBtn" class="play-circle" type="button" aria-label="Play verse"><svg id="playIcon" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button><button id="nextBtn" class="transport small-transport" title="Next verse" aria-label="Next verse" type="button"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M16 5h2v14h-2zM5 5v14l10-7z"/></svg></button></div><div class="player-progress"><div class="timestamps"><span id="timeCurrent">0:00</span><span id="timeTotal">0:00</span></div><input id="seekBar" type="range" min="0" max="100" value="0" aria-label="Audio progress" /></div><div class="player-extra"><button id="repeatBtn" type="button" class="mini-toggle" aria-pressed="false" title="Repeat current verse">↻ <span>Repeat</span></button><button id="speedBtn" type="button" class="mini-toggle" aria-label="Playback speed">1×</button></div></div>
+  </div>
+  <audio id="audio" preload="none"></audio>
+
+  <div id="qrModal" class="modal" hidden><div class="modal-backdrop" data-close="true"></div><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="qrHeading"><button class="modal-close" id="closeQr" type="button" aria-label="Close">×</button><span class="overline">FOR YOUR PRINTED QURAN</span><h2 id="qrHeading">Create a scan-to-continue QR</h2><p class="modal-intro">Make a QR code for the first verse on a printed page. Scanning it opens this website at that exact Surah and Ayah.</p><div class="qr-layout"><div><label class="modal-label" for="qrSurah">Surah</label><select id="qrSurah"></select><label class="modal-label" for="qrVerse">First verse on this page</label><select id="qrVerse"></select><label class="modal-label" for="qrPage">Printed page number <span>(optional)</span></label><input id="qrPage" type="number" min="1" max="9999" placeholder="e.g. 42" /><button id="savePage" class="secondary-button" type="button">Save this page mapping</button></div><div class="qr-preview"><div id="qrImage"><span class="qr-placeholder">▦</span></div><strong id="qrCaption">Surah 1 · Ayah 1</strong><span class="preview-label">Scan with your phone camera</span></div></div><div class="share-url"><input id="qrUrl" readonly aria-label="QR link" /><button id="copyQr" type="button">Copy link</button></div><div class="modal-actions"><button class="primary-button" id="printOne" type="button">Print this QR</button><button class="secondary-button" id="openSheet" type="button">Manage page QR sheet <span aria-hidden="true">↗</span></button></div><p class="qr-warning">Set the first verse yourself to match your printed Quran edition. Page boundaries vary between editions.</p></section></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

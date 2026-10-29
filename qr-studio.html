@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#123d32" />
+  <title>QR Page Studio — Quran Companion</title>
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/style.css" />
+  <script src="data/surahs.js" defer></script>
+  <script src="assets/studio.js" defer></script>
+</head>
+<body class="studio-page">
+  <header class="topbar"><div class="topbar-inner"><a class="brand" href="./"><span class="brand-mark">۞</span><span class="brand-stack"><strong>Quran Companion</strong><small>READ · LISTEN · CONTINUE</small></span></a><a href="./" class="back-reader">← Back to reader</a></div></header>
+  <main class="studio-shell">
+    <div class="studio-intro"><span class="overline">PRINT WORKSPACE</span><h1>Page QR Studio<span class="gold-dot">.</span></h1><p>Create a QR code for every printed Quran page. Each code opens the exact Surah and Ayah selected for that page, using Ahmadiyya numbering.</p></div>
+    <div class="studio-layout"><section class="studio-card"><div class="section-heading"><span class="studio-step">01</span><div><h2>Map a printed page</h2><p>Choose the first verse on the physical page.</p></div></div><form id="mappingForm" class="mapping-form"><div class="field"><label for="pageNumber">Page number</label><input id="pageNumber" required type="number" min="1" max="9999" placeholder="e.g. 18" /></div><div class="field"><label for="studioSurah">Surah</label><select id="studioSurah"></select></div><div class="field"><label for="studioAyah">First ayah</label><select id="studioAyah"></select></div><button type="submit" class="primary-button">Add page</button></form><p class="studio-help">Different print editions start and end pages at different verses. Confirm the beginning of each page against your own Quran before printing.</p></section>
+    <section class="studio-card studio-card-side"><div class="section-heading"><span class="studio-step">02</span><div><h2>Prepare your sheet</h2><p>Import mappings, then print your QR labels.</p></div></div><div class="studio-stat"><strong id="mappedCount">0</strong><span>pages mapped</span></div><div class="studio-actions"><button id="printSheet" class="primary-button" type="button">Print QR labels</button><button id="exportCsv" class="secondary-button" type="button">Download CSV</button><label class="file-label" for="csvFile">Import CSV <span aria-hidden="true">↑</span></label><input id="csvFile" type="file" accept=".csv,text/csv" hidden /><button id="clearMappings" class="quiet-button" type="button">Remove all mappings</button></div><p class="studio-help">CSV format: <code>page,surah,ayah</code>. Your mappings are stored on this device. Download the CSV to keep a backup.</p></section></div>
+    <section class="studio-card studio-table-card"><div class="section-heading"><span class="studio-step">03</span><div><h2>Your page mappings</h2><p>Review each QR destination before printing.</p></div></div><div id="emptyState" class="studio-empty">No pages added yet. Add the first printed page above, or import a CSV file.</div><div class="table-scroller"><table id="mapTable" class="map-table" hidden><thead><tr><th>Printed page</th><th>Starts at</th><th>Reference</th><th>Link</th><th></th></tr></thead><tbody id="mapRows"></tbody></table></div></section>
+    <section id="printArea" class="print-area" aria-label="Printable Quran QR codes"><div class="print-header"><span>QURAN COMPANION</span><h2>Listen as you read</h2><p>Scan a code to continue at the first verse on that page.</p></div><div id="printGrid" class="print-grid"></div></section>
+    <div class="studio-footer">Alislam's Ahmadiyya numbering is used throughout. Bismillah is ayah 1, except in Surah At-Taubah. <a href="https://www.alislam.org/quran/app/" target="_blank" rel="noopener noreferrer">Official Alislam Quran app ↗</a></div>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body></html>
